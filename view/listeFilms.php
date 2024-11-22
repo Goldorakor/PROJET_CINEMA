@@ -25,7 +25,7 @@
                     <?= $film["titre"] ?>
                     </td>
                     <td>
-                    <?= $film["annee_sortie"] ?>
+                    <?= $film["dateSortie"] ?>
                     </td>
                 </tr>
         <?php   } ?>
