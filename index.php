@@ -17,13 +17,25 @@ $ctrlCinema = new CinemaController();
 
 
 if(isset($_GET["action"])) {
-    // en fonction de l'action détectée dans l'URL via la propriété "action" on interagit avec la bonne méthode du controller
+    // en fonction de l'action détectée dans l'URL via la propriété "action", on interagit avec la bonne méthode du controller.
     switch ($_GET["action"]) {
 
-        // si je détecte cette action, je fais appelle la méthode ListFilms() du controller $ctrlCinema
-        case "" : $ctrlCinema->ListFilms(); break;
-        // si je détecte cette action, je fais appelle la méthode ListActeurs() du controller $ctrlCinema
-        case "" : $ctrlCinema->ListActeurs(); break;
+        // si je détecte cette action, j'appelle directement view/home.php
+        case "home" : require"view/home.php"; break;
+
+        // si je détecte cette action, j'appelle la méthode ListFilms() du controller $ctrlCinema
+        case "listFilms" : $ctrlCinema->ListFilms(); break;
+        // si je détecte cette action, j'appelle la méthode ListActeurs() du controller $ctrlCinema
+        case "listActeurs" : $ctrlCinema->ListActeurs(); break;
+        // si je détecte cette action, j'appelle la méthode ListRealisateurs() du controller $ctrlCinema
+        case "listRealisateurs" : $ctrlCinema->ListRealisateurs(); break;
+
+        case "detailsFilm" : $ctrlCinema->detailsFilm($idFilmChoisi); break;
+
+        case "detailsActeur" : $ctrlCinema->detailsActeur($idActeurChoisi); break;
+
+        case "detailsRealisateur" : $ctrlCinema->detailsRealisateur($idRealisateurChoisi); break;
+
 
         // etc
 
