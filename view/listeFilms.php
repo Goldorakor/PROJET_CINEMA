@@ -2,7 +2,7 @@
 <!-- on commence et on termine la vue par "ob_start()" et "ob_get_clean()" -->
 <?php ob_start(); ?>
 
-<p class="uk-label uk-label-warning">Il y a <?= $requete->rowCount() ?> films.</p>
+<p class="uk-label uk-label-warning">Il y a actuellement <?= $requete->rowCount() ?> films dans notre base de données.</p>
 
 
 <table class="uk-table uk-table-striped">
@@ -31,7 +31,7 @@
                     <?= $film["anneeSortie"] ?>
                     </td>
                     <td>
-                        <a href="index.php?action=detailsFilm&id=$film['idFilm']">
+                        <a href="index.php?action=detailsFilm&id=<?= $film['idFilm'] ?>">
                             voir +
                         </a>
                     </td>

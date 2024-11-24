@@ -30,11 +30,50 @@ if(isset($_GET["action"])) {
         // si je détecte cette action, j'appelle la méthode ListRealisateurs() du controller $ctrlCinema
         case "listRealisateurs" : $ctrlCinema->ListRealisateurs(); break;
 
-        case "detailsFilm" : $ctrlCinema->detailsFilm($idFilmChoisi); break;
 
-        case "detailsActeur" : $ctrlCinema->detailsActeur($idActeurChoisi); break;
+        case "detailsFilm" : 
 
-        case "detailsRealisateur" : $ctrlCinema->detailsRealisateur($idRealisateurChoisi); break;
+        //vérification de l'id du film
+        if (!isset($_GET['id'])) {
+            die("erreur : l'id du film est manquant");
+        }
+    
+        // on récupère l'id du film choisi dans la liste de films
+        // $idFilmChoisi = $_GET['id']; -> syntaxe classique que j'utilise
+        $idFilmChoisi = (isset($_GET['id'])) ? $_GET['id'] : null;  // syntaxe du formateur
+
+        $ctrlCinema->detailsFilm($idFilmChoisi); break;
+
+
+        case "detailsActeur" : 
+
+        //vérification de l'id de l'acteur
+        if (!isset($_GET['id'])) {
+            die("erreur : l'id de l'acteur est manquant");
+        }
+    
+        // on récupère l'id de l'acteur choisi dans la liste d'acteurs
+        // $idActeurChoisi = $_GET['id']; -> syntaxe classique que j'utilise
+        $idActeurChoisi = (isset($_GET['id'])) ? $_GET['id'] : null;  // syntaxe du formateur
+
+        $ctrlCinema->detailsActeur($idActeurChoisi); break;
+
+
+        case "detailsRealisateur" : 
+
+        //vérification de l'id du réalisateur
+        if (!isset($_GET['id'])) {
+            die("erreur : l'id du réalisateur est manquant");
+        }
+    
+        // on récupère l'id du réalisateur choisi dans la liste de réalisateurs
+        // $idRealisateurChoisi = $_GET['id']; -> syntaxe classique que j'utilise
+        $idRealisateurChoisi = (isset($_GET['id'])) ? $_GET['id'] : null;  // syntaxe du formateur
+        
+        $ctrlCinema->detailsRealisateur($idRealisateurChoisi); break;
+
+
+
 
 
         // etc

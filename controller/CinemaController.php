@@ -85,19 +85,26 @@ class CinemaController {
     * détailler un film
     */
 
+    // public function detailsFilm ($blabla) -> dans index, on appelera cette méthode, en lui donnant l'attribut $idFilmChoisi à la place de $blabla
     public function detailsFilm ($idFilmChoisi) {
 
         $pdo = Connect::seConnecter();
 
 
 
-        // vérification de l'id du film
+        /*
+        attention, cette portion de code n'a pas sa place ici ! il faudra mettre un code similaire quelque part dans index.php
+
+        vérification de l'id du film
         if (!isset($_GET['id'])) {
             die("erreur : l'id du film est manquant");
         }
 
         // on récupère l'id du film choisi dans la liste de films
         $idFilmChoisi = $_GET['id'];
+        */
+
+
 
         // on peut poser $sql4 = "SELECT ... "
         // (YEAR(NOW()) - YEAR(personne.dateNaissance)) AS ageActeur -> je stocke ici au cas où
@@ -171,6 +178,9 @@ class CinemaController {
 
 
 
+        /*
+        attention, cette portion de code n'a pas sa place ici ! il faudra mettre un code similaire quelque part dans index.php
+
         // vérification de l'id de l'acteur
         if (!isset($_GET['id'])) {
             die("erreur : l'id de l'acteur est manquant");
@@ -178,6 +188,9 @@ class CinemaController {
 
         // on récupère l'id de l'acteur choisi dans la liste d'acteurs
         $idActeurChoisi = $_GET['id'];
+        */
+
+
 
         // on peut poser $sql6 = "SELECT ... "
         $sql7 = "
@@ -221,6 +234,9 @@ class CinemaController {
 
 
 
+
+        /*
+        attention, cette portion de code n'a pas sa place ici ! il faudra mettre un code similaire quelque part dans index.php
         // vérification de l'id du réalisateur
         if (!isset($_GET['id'])) {
             die("erreur : l'id du réalisateur est manquant");
@@ -228,6 +244,9 @@ class CinemaController {
 
         // on récupère l'id du réalisateur choisi dans la liste de réalisateurs
         $idRealisateurChoisi = $_GET['id'];
+        */
+
+        
 
         // on peut poser $sql8 = "SELECT ... "
         $sql9 = "

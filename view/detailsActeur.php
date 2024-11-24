@@ -2,7 +2,11 @@
 <!-- on commence et on termine la vue par "ob_start()" et "ob_get_clean()" -->
 <?php ob_start(); ?>
 
-<p class="uk-label uk-label-warning">Cet acteur a joué dans <?= $requete2->rowCount() ?> films.</p>
+<p class="uk-label uk-label-warning">Cet acteur a joué dans <?= $requete2->rowCount() ?> film(s).</p>
+
+
+
+
 
 <?php
 $identite = $requete1->fetch() // tableau associatif récupéré sur la requête1, possédant 4 paires clés-valeurs. cette requête n'envoie qu'une seule ligne.
@@ -19,20 +23,23 @@ $identite = $requete1->fetch() // tableau associatif récupéré sur la requête
     <tbody>
         <tr>
             <td>
-            <?= $identite["prenom"] ?>
+                <?= $identite["prenom"] ?> <?= $identite["nom"] ?>
             </td>
+        </tr>
+        <tr>
             <td>
-            <?= $identite["nom"] ?>
+                civilité : <?= $identite["sexe"] ?>
             </td>
+        </tr>
+        <tr>
             <td>
-            <?= $identite["sexe"] ?>
-            </td>
-            <td>
-            <?= $identite["ageActeur"] ?>
+                âge : <?= $identite["ageActeur"] ?>
             </td>
         </tr>
     </tbody>
 </table>
+
+
 
 <table class="uk-table uk-table-striped">
     <thead>
@@ -60,6 +67,7 @@ $identite = $requete1->fetch() // tableau associatif récupéré sur la requête
         <?php   } ?>
     </tbody>
 </table>
+
 
 
 <?php

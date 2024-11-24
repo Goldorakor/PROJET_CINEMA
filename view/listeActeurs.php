@@ -31,7 +31,7 @@
                     <?= $acteur["nom"] ?>
                     </td>
                     <td>
-                        <a href="index.php?action=detailsActeur&id=$acteur['idActeur']">
+                        <a href="index.php?action=detailsActeur&id=<?= $acteur['idActeur'] ?>">
                             voir +
                         </a>
                     </td>

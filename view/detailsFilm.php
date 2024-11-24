@@ -2,18 +2,22 @@
 <!-- on commence et on termine la vue par "ob_start()" et "ob_get_clean()" -->
 <?php ob_start(); ?>
 
-<p class="uk-label uk-label-warning">Cet acteur a joué dans <?= $requete2->rowCount() ?> film(s).</p>
+<p class="uk-label uk-label-warning">Le casting de ce film compte <?= $requete2->rowCount() ?> acteur(s) de notre liste d'acteurs.</p>
 
-<?php
+
+<?php 
 $identite = $requete1->fetch() // tableau associatif récupéré sur la requête1, possédant 8 paires clés-valeurs. cette requête n'envoie qu'une seule ligne.
 ?>
 
+
+
 <h2>
-    rrrrrrrrrrr<?= $identite["titre"] ?>
+    Titre : <?= $identite["titre"] ?>
 </h2>
 
 <p>
-    <?= $identite["synopsis"] ?>
+résumé :<br>
+<?= $identite["synopsis"] ?>
 </p>
 
 <div>
@@ -34,6 +38,9 @@ $identite = $requete1->fetch() // tableau associatif récupéré sur la requête
 
 
 
+
+
+
 <table class="uk-table uk-table-striped">
     <thead>
         <tr>
@@ -51,10 +58,10 @@ $identite = $requete1->fetch() // tableau associatif récupéré sur la requête
             foreach($requete2->fetchALL() as $casting) { ?>
                 <tr>
                     <td>
-                    <?= casting[1] ?> <?= casting[0] ?> / <?= casting[2] ?>
+                    <?=  $casting['prenom'] ?> <?=  $casting['nom'] ?> / <?=  $casting['sexe'] ?>
                     </td>
                     <td>
-                    <?= $casting[3] ?>
+                    <?= $casting['role'] ?>
                     </td>  
                 </tr>
         <?php   } ?>
@@ -78,7 +85,7 @@ $identite = $requete1->fetch() // tableau associatif récupéré sur la requête
             foreach($requete3->fetchALL() as $genre) { ?>
                 <tr>
                     <td>
-                    <?= $genre["libelle"] ?>
+                    <?= $genre['libelle'] ?>
                     </td> 
                 </tr>
         <?php   } ?>
