@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="http://localhost/07_BASE_DE_DONNES_SQL/PROJET_CINEMA/public/css/style.css">  <!-- ../public/css/style.css ou /public/css/style.css ou le chemin absolu en cas de souci -->
+    <link rel="stylesheet" href="public/css/style.css">  <!-- ../public/css/style.css ou /public/css/style.css ou le chemin absolu en cas de souci -->
 
     <!-- je remplis mon modèle de vues avec les variables souhaitées, indispensable à la souplesse du modèle -->
     <title><?= $titre ?></title>

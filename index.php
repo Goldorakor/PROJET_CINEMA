@@ -15,13 +15,16 @@ spl_autoload_register (function ($class_name) {
 // $ctrlCinema est un objet de la classe CinemaController (une instanciation)
 $ctrlCinema = new CinemaController();
 
+$id = (isset($_GET['id'])) ? $_GET['id'] : null;
 
 if(isset($_GET["action"])) {
     // en fonction de l'action détectée dans l'URL via la propriété "action", on interagit avec la bonne méthode du controller.
     switch ($_GET["action"]) {
 
-        // si je détecte cette action, j'appelle directement view/home.php
-        case "home" : require"view/home.php"; break;
+        // si je détecte cette action, j'appelle directement view/home.php -> NON !!!
+        // pour uniformiser notre code, il est plus propre d'appeler la méthode home() qui est définie comme suit :
+        // public function home() {require "view/home.php";}
+        case "home" : $ctrlCinema->home(); break;
 
         // si je détecte cette action, j'appelle la méthode ListFilms() du controller $ctrlCinema
         case "listFilms" : $ctrlCinema->ListFilms(); break;
@@ -30,48 +33,17 @@ if(isset($_GET["action"])) {
         // si je détecte cette action, j'appelle la méthode ListRealisateurs() du controller $ctrlCinema
         case "listRealisateurs" : $ctrlCinema->ListRealisateurs(); break;
 
+        // les vérifications sur $idFilmChoisi ont été transférées au CinemaController.php
+        case "detailsFilm" : $ctrlCinema->detailsFilm($id); break;
 
-        case "detailsFilm" : 
+        // les vérifications sur $idActeurChoisi ont été transférées au CinemaController.php
+        case "detailsActeur" : $ctrlCinema->detailsActeur($id); break;
 
-        //vérification de l'id du film
-        if (!isset($_GET['id'])) {
-            die("erreur : l'id du film est manquant");
-        }
-    
-        // on récupère l'id du film choisi dans la liste de films
-        // $idFilmChoisi = $_GET['id']; -> syntaxe classique que j'utilise
-        $idFilmChoisi = (isset($_GET['id'])) ? $_GET['id'] : null;  // syntaxe du formateur
+        // les vérifications sur $idActeurChoisi ont été transférées au CinemaController.php
+        case "detailsRealisateur" : $ctrlCinema->detailsRealisateur($id); break;
 
-        $ctrlCinema->detailsFilm($idFilmChoisi); break;
-
-
-        case "detailsActeur" : 
-
-        //vérification de l'id de l'acteur
-        if (!isset($_GET['id'])) {
-            die("erreur : l'id de l'acteur est manquant");
-        }
-    
-        // on récupère l'id de l'acteur choisi dans la liste d'acteurs
-        // $idActeurChoisi = $_GET['id']; -> syntaxe classique que j'utilise
-        $idActeurChoisi = (isset($_GET['id'])) ? $_GET['id'] : null;  // syntaxe du formateur
-
-        $ctrlCinema->detailsActeur($idActeurChoisi); break;
-
-
-        case "detailsRealisateur" : 
-
-        //vérification de l'id du réalisateur
-        if (!isset($_GET['id'])) {
-            die("erreur : l'id du réalisateur est manquant");
-        }
-    
-        // on récupère l'id du réalisateur choisi dans la liste de réalisateurs
-        // $idRealisateurChoisi = $_GET['id']; -> syntaxe classique que j'utilise
-        $idRealisateurChoisi = (isset($_GET['id'])) ? $_GET['id'] : null;  // syntaxe du formateur
-        
-        $ctrlCinema->detailsRealisateur($idRealisateurChoisi); break;
-
+        // les vérifications sur la variable $_POST['libelle'] dans la superglobale $_POST ont été transférées au CinemaController.php
+        case "ajoutGenreBase" : $ctrlCinema->ajoutGenreBase(); break;
 
 
 
@@ -79,6 +51,8 @@ if(isset($_GET["action"])) {
         // etc
 
     }
+} else {
+    $ctrlCinema->home();
 }
 
 // ici, on devra renvoyer sur une autre location, si on n'a pas récupéré d'actions

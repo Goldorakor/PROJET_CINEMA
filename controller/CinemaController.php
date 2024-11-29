@@ -9,10 +9,17 @@ use Model\Connect;
 class CinemaController {
 
     /*
+    * accéder à la page d'accueil
+    */
+    
+    public function home() {
+        require "view/home.php";
+    }
+
+    /*
     * lister les films
     */
 
-    //
     public function listFilms () {
 
         $pdo = Connect::seConnecter();
@@ -31,7 +38,6 @@ class CinemaController {
         require "view/listeFilms.php";
     }
 
-
     /*
     * lister les acteurs
     */
@@ -40,7 +46,6 @@ class CinemaController {
 
         $pdo = Connect::seConnecter();
 
-        // on peut poser $sql2 = "SELECT ... "
         $sql2 = "
             SELECT acteur.idActeur, personne.idPersonne, personne.prenom, UPPER(personne.nom) AS nom
             FROM personne
@@ -55,7 +60,6 @@ class CinemaController {
         require "view/listeActeurs.php";
     }
 
-
     /*
     * lister les réalisateurs
     */
@@ -64,7 +68,6 @@ class CinemaController {
 
         $pdo = Connect::seConnecter();
 
-        // on peut poser $sql3 = "SELECT .... "
         $sql3 = "
             SELECT realisateur.idRealisateur, personne.idPersonne, personne.prenom, UPPER(personne.nom) AS nom
             FROM personne
@@ -72,14 +75,12 @@ class CinemaController {
             ORDER BY nom
         ";
 
-
         // prépare et exécute une requête SQL en un seul appel de fonction
         $requete = $pdo->query($sql3);
 
         // on relie par un "require" la vue qui nous intéresse (située dans le dossier "view")
         require "view/listeRealisateurs.php";
     }
-
 
     /*
     * détailler un film
@@ -89,8 +90,6 @@ class CinemaController {
     public function detailsFilm ($idFilmChoisi) {
 
         $pdo = Connect::seConnecter();
-
-
 
         /*
         attention, cette portion de code n'a pas sa place ici ! il faudra mettre un code similaire quelque part dans index.php
@@ -105,24 +104,30 @@ class CinemaController {
         */
 
 
-
-        // on peut poser $sql4 = "SELECT ... "
         // (YEAR(NOW()) - YEAR(personne.dateNaissance)) AS ageActeur -> je stocke ici au cas où
         $sql4 = "
-            SELECT film.idFilm, film.titre, film.synopsis, film.duree, film.note,  DATE_FORMAT(film.dateSortie, '%Y') AS anneeSortie, personne.prenom, UPPER(personne.nom) AS nom
+            SELECT film.idRealisateur, film.idFilm, film.titre, film.synopsis, film.duree, film.note,  DATE_FORMAT(film.dateSortie, '%Y') AS anneeSortie, personne.prenom, UPPER(personne.nom) AS nom
             FROM film
             INNER JOIN realisateur ON film.idRealisateur = realisateur.idRealisateur
             INNER JOIN personne ON realisateur.idPersonne = personne.idPersonne
             WHERE film.idFilm = :id
         ";
 
+
+        //vérification de l'id du film
+        if (!isset($_GET['id'])) {
+            die("erreur : l'id du film est manquant");
+        }
+    
+        // on récupère l'id du film choisi dans la liste de films
+        // $idFilmChoisi = $_GET['id']; -> syntaxe classique que j'utilise
+        $idFilmChoisi = (isset($_GET['id'])) ? $_GET['id'] : null;  // syntaxe du formateur
+
         $requete1 = $pdo->prepare($sql4);
         $requete1->execute(["id" => $idFilmChoisi]);
 
-
-
         $sql5 = "
-            SELECT UPPER(personne.nom) AS nom, personne.prenom, personne.sexe, personnage.nom AS role
+            SELECT acteur.idActeur, film.idFilm, UPPER(personne.nom) AS nom, personne.prenom, personne.sexe, personnage.nom AS role
             FROM casting
             INNER JOIN film ON casting.idFilm = film.idFilm
             INNER JOIN personnage ON casting.idPersonnage = personnage.idPersonnage
@@ -132,22 +137,8 @@ class CinemaController {
         ";
 
 
-        /* requête possible également qui ne nécessite pas la jointure avec la table 'film'
-
-        $sql5 = "
-            SELECT personne.nom, personne.prenom, personne.sexe, personnage.nom
-            FROM casting
-            INNER JOIN personnage ON casting.idPersonnage = personnage.idPersonnage
-            INNER JOIN acteur ON casting.idActeur = acteur.idActeur
-            INNER JOIN personne ON acteur.idPersonne = personne.idPersonne
-            WHERE casting.idFilm = :id
-        ";
-        */
-
         $requete2 = $pdo->prepare($sql5);
         $requete2->execute(["id" => $idFilmChoisi]);
-
-
 
         // requête pour lister les genres d'un film -> vérification effectuée
         $sql6 = "
@@ -160,8 +151,6 @@ class CinemaController {
 
         $requete3 = $pdo->prepare($sql6);
         $requete3->execute(["id" => $idFilmChoisi]);
-
-
 
         // on relie par un "require" la vue qui nous intéresse (située dans le dossier "view")
         require "view/detailsFilm.php";
@@ -176,53 +165,43 @@ class CinemaController {
 
         $pdo = Connect::seConnecter();
 
-
-
-        /*
-        attention, cette portion de code n'a pas sa place ici ! il faudra mettre un code similaire quelque part dans index.php
-
-        // vérification de l'id de l'acteur
-        if (!isset($_GET['id'])) {
-            die("erreur : l'id de l'acteur est manquant");
-        }
-
-        // on récupère l'id de l'acteur choisi dans la liste d'acteurs
-        $idActeurChoisi = $_GET['id'];
-        */
-
-
-
-        // on peut poser $sql6 = "SELECT ... "
         $sql7 = "
             SELECT prenom, UPPER(personne.nom) AS nom, sexe, (YEAR(NOW()) - YEAR(personne.dateNaissance)) AS ageActeur
             FROM personne
             INNER JOIN acteur ON personne.idPersonne = acteur.idPersonne
             WHERE acteur.idActeur = :id
         "; /* WHERE personne.idPersonne = :id ou WHERE acteur.idActeur = :id -> deux choix possibles */
+        /* FAUX -> il faut prendre WHERE acteur.idActeur = :id et rien d'autre */
+
+
+        //vérification de l'id de l'acteur
+        if (!isset($_GET['id'])) {
+            die("erreur : l'id de l'acteur est manquant");
+        }
+    
+        // on récupère l'id de l'acteur choisi dans la liste d'acteurs
+        // $idActeurChoisi = $_GET['id']; -> syntaxe classique que j'utilise
+        $idActeurChoisi = (isset($_GET['id'])) ? $_GET['id'] : null;  // syntaxe du formateur
 
         $requete1 = $pdo->prepare($sql7);
         $requete1->execute(["id" => $idActeurChoisi]);
 
-
-
         $sql8 = "
-            SELECT film.titre, personnage.nom
+            SELECT film.idFilm, film.titre, personnage.nom
             FROM casting
             INNER JOIN film ON casting.idFilm = film.idFilm
             INNER JOIN personnage ON casting.idPersonnage = personnage.idPersonnage
             INNER JOIN acteur ON casting.idActeur = acteur.idActeur
             WHERE acteur.idActeur = :id
         "; /* WHERE personne.idPersonne = :id ou WHERE acteur.idActeur = :id -> deux choix possibles */
+        /* FAUX -> il faut prendre WHERE acteur.idActeur = :id et rien d'autre */
 
         $requete2 = $pdo->prepare($sql8);
         $requete2->execute(["id" => $idActeurChoisi]);
 
-
-
         // on relie par un "require" la vue qui nous intéresse (située dans le dossier "view")
         require "view/detailsActeur.php";
     }
-
 
     /*
     * détailler un réalisateur
@@ -232,23 +211,6 @@ class CinemaController {
 
         $pdo = Connect::seConnecter();
 
-
-
-
-        /*
-        attention, cette portion de code n'a pas sa place ici ! il faudra mettre un code similaire quelque part dans index.php
-        // vérification de l'id du réalisateur
-        if (!isset($_GET['id'])) {
-            die("erreur : l'id du réalisateur est manquant");
-        }
-
-        // on récupère l'id du réalisateur choisi dans la liste de réalisateurs
-        $idRealisateurChoisi = $_GET['id'];
-        */
-
-        
-
-        // on peut poser $sql8 = "SELECT ... "
         $sql9 = "
             SELECT prenom, UPPER(personne.nom) AS nom, sexe, (YEAR(NOW()) - YEAR(personne.dateNaissance)) AS ageRealisateur
             FROM personne
@@ -256,28 +218,70 @@ class CinemaController {
             WHERE realisateur.idRealisateur = :id
         "; /* WHERE personne.idPersonne = :id ou WHERE realisateur.idRealisateur = :id -> deux choix possibles */
 
+        
+        //vérification de l'id du réalisateur
+        if (!isset($_GET['id'])) {
+            die("erreur : l'id du réalisateur est manquant");
+        }
+    
+        // on récupère l'id du réalisateur choisi dans la liste de réalisateurs
+        // $idRealisateurChoisi = $_GET['id']; -> syntaxe classique que j'utilise
+        $idRealisateurChoisi = (isset($_GET['id'])) ? $_GET['id'] : null;  // syntaxe du formateur
+
+        
         $requete1 = $pdo->prepare($sql9);
         $requete1->execute(["id" => $idRealisateurChoisi]);
 
 
-
         $sql10 = "
-            SELECT film.titre, DATE_FORMAT(film.dateSortie, '%Y') AS anneeSortie
+            SELECT film.idFilm, film.titre, DATE_FORMAT(film.dateSortie, '%Y') AS anneeSortie
             FROM film
             INNER JOIN realisateur ON film.idRealisateur = realisateur.idRealisateur
             INNER JOIN personne ON realisateur.idPersonne = personne.idPersonne
-            WHERE personne.idPersonne = :id  
+            WHERE realisateur.idRealisateur = :id  
         "; /* WHERE personne.idPersonne = :id ou WHERE realisateur.idRealisateur = :id -> deux choix possibles */ 
 
         $requete2 = $pdo->prepare($sql10);
         $requete2->execute(["id" => $idRealisateurChoisi]);
 
 
-
         // on relie par un "require" la vue qui nous intéresse (située dans le dossier "view")
         require "view/detailsRealisateur.php";
     }
 
+    /*
+    * ajouter un genre dans la BDD
+    */
+
+    public function ajoutGenreBase () {
+
+        
+        if(isset($_POST['submit'])) {
+            // var_dump("ok");die;
+            $libelleGenreRecup = filter_input(INPUT_POST, "libelle", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+            if($libelleGenreRecup) {
+
+                $pdo = Connect::seConnecter();
+                $sql11 = "
+                    INSERT INTO genre (libelle)
+                    VALUES (:libelle)
+                ";
+                    
+                $requete2 = $pdo->prepare($sql11);
+                $requete2->execute(["libelle" => $libelleGenreRecup]);
+        
+                // on crée une variable success, qui confirmera le bon enregistrement du produit
+                $_SESSION['success'] = "Le libellé a été enregistré avec succès";
+                header("Location: index.php?action=home");
+    
+            }
+        } else {
+                // on crée une variable erreur, qui avertira d'un problème à l'enregistrement du libellé
+                $_SESSION['error'] = "Erreur : veuillez saisir le libellé de la table 'genre'";
+                header("Location: index.php?action=home");
+            }
+    }
 }
 
 /* 

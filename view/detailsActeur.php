@@ -58,7 +58,7 @@ $identite = $requete1->fetch() // tableau associatif récupéré sur la requête
             foreach($requete2->fetchALL() as $filmographie) { ?>
                 <tr>
                     <td>
-                    <?= $filmographie["titre"] ?>
+                    <a href="index.php?action=detailsFilm&id=<?= $filmographie['idFilm'] ?>"><?= $filmographie["titre"] ?></a>
                     </td>
                     <td>
                     <?= $filmographie["nom"] ?>
@@ -84,3 +84,4 @@ $contenu = ob_get_clean();
 // le require de fin permet d'injecter le contenu dans le template "squelette" -> template.php
 // en effet, dans notre "template.php" on aura des variables qui vont accueillir les éléments provenant des vues
 require "view/template.php";
+

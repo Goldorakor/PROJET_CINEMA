@@ -33,10 +33,9 @@ résumé :<br>
 </div>
 
 <div>
-    Ce film a été réalisé par <?= $identite["prenom"] ?> <?= $identite["nom"] ?>.
+
+    Ce film a été réalisé par <a href="index.php?action=detailsRealisateur&id=<?= $identite['idRealisateur'] ?>"><?= $identite["prenom"] ?> <?= $identite["nom"] ?></a>.
 </div>
-
-
 
 
 
@@ -58,7 +57,7 @@ résumé :<br>
             foreach($requete2->fetchALL() as $casting) { ?>
                 <tr>
                     <td>
-                    <?=  $casting['prenom'] ?> <?=  $casting['nom'] ?> / <?=  $casting['sexe'] ?>
+                    <a href="index.php?action=detailsActeur&id=<?= $casting['idActeur'] ?>"><?=  $casting['prenom'] ?> <?=  $casting['nom'] ?></a> / <?=  $casting['sexe'] ?>
                     </td>
                     <td>
                     <?= $casting['role'] ?>
