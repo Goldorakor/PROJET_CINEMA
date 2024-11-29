@@ -1,0 +1,369 @@
+/* je commence par calibrer ma page pour éviter tout comportement indésirable */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: serif;
+}
+
+
+#container {
+    background: rgb(240, 212, 27);
+}
+
+
+header {
+    width: 1600px;
+    margin: auto;  /* propriété placée dans l'élément qu'on veut centrer, et non dans le contenant */ 
+}
+
+
+@media screen and (max-width: 1200px) {
+    header {
+        width: 100vw;
+    }   
+}
+
+
+h2 {  /* on transforme notre boite h2 en flexbox et du coup, on peut aligner facilement le contenu grâce aux propriétés flexbox */
+    display: flex;
+    background: rgb(14, 123, 181);
+    height: 60px;
+    justify-content: center;
+    align-items: center;
+    color: rgb(224, 224, 224);
+    font-size: 34px;
+    font-style: italic;
+}  /* pas d'excès de div, les balises classiques deviennent des flex box facilement ! */
+
+
+#image-bandeau {
+    height: 600px;
+    width: 100%;
+}
+
+
+@media screen and (max-width: 1200px) {
+    #image-bandeau {
+        width: 100vw;
+    }   
+}
+
+
+#image-bandeau img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
+nav {
+    display: flex;
+    flex-direction: row;
+    background: rgb(14, 123, 181);
+    justify-content: center;
+    align-items: center;
+    height: 80px;
+}
+
+ul {
+    display: flex;
+    flex-direction: row;
+    background: rgb(14, 123, 181);
+    justify-content: center;
+    align-items: center;
+    height: 80px;
+    text-decoration: none;
+    list-style-type : none
+}
+
+
+@media screen and (max-width: 1200px) {
+    nav {
+        flex-direction: column;
+        background: rgb(170, 208, 213);
+        height: 400px;
+        width: 100vw;
+    }   
+}
+
+@media screen and (max-width: 1200px) {
+    ul {
+        flex-direction: column;
+        background: rgb(170, 208, 213);
+        height: 400px;
+        width: 100vw;
+    }   
+}
+
+@media screen and (max-width: 600px) {
+    nav > ul {
+        display: none;
+    }   
+}
+
+
+@media screen and (max-width: 600px) {
+    nav {
+        height: 2px;
+    }   
+}
+
+nav a {
+    color: rgb(224, 224, 224);
+    margin: 12px;
+    text-decoration: none;
+}
+
+
+@media screen and (max-width: 1200px) {
+    nav a {
+        color: rgb(21, 90, 217);
+        margin: 30px;
+        font-weight: bold;
+    }   
+}
+
+@media screen and (max-width: 1200px) {
+    .moyen {
+        color: rgb(21, 90, 217);
+        margin: 30px;
+        font-weight: bold;
+    }   
+}
+
+
+.sandwich {
+    display: none;
+}
+
+
+@media screen and (max-width: 600px) {
+    .sandwich {
+        display: block;
+    }   
+}
+
+
+
+.hamburger {
+    position: fixed;
+    /* a large z-index puts the ham button above the rest of the page*/
+    z-index: 99;
+    background: rgb(143, 194, 206);
+    border: 3px solid rgb(215, 20, 20);
+    cursor: pointer;
+    top: 3rem;
+    left: 1px;
+    font-size: 2rem;
+}
+
+
+.menu {
+    position: fixed;
+    /* give the menu a larger z-index than the ham link
+    to put the menu above it */
+    z-index: 100;
+    top: 5px;
+    left: 5px;
+    right: 0;
+    bottom: 0;
+    width: 45%;
+    height: 65vh;
+    /* basic menu styling*/
+    list-style: none;
+    background: rgb(9, 200, 230);
+    display: flex;
+    flex-direction: column;
+    /* animate slide up/down */
+    transform: translateY(-100%);
+    transition: transform 0.2s ease;
+}
+
+
+.smart-menu {
+    padding: 30px;
+}
+
+
+.menu:target {
+    /* show menu */
+    transform: translateY(0);
+}
+
+
+.close {
+    position: absolute;
+    border: none;
+    color: rgb(203, 13, 13);
+    cursor: pointer;
+    top: 0.1rem;
+    right: 0.1rem;
+    font-size: 2rem;
+}
+
+
+
+main {
+    width: 1600px;
+    margin: auto;  /* propriété placée dans l'élément qu'on veut centrer, et non dans le contenant */
+    background: white;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+
+
+@media screen and (max-width: 1200px) {
+    main {
+        width: 100vw;
+        flex-direction: column;
+    }   
+}
+
+
+h1 {
+    color: rgb(240, 212, 27);
+    font-size: 34px;
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+    height: 80px;
+    margin-left: 20px;
+    width: 100%;
+}
+
+
+article {
+    width: 65%;
+    margin: 20px;
+}
+
+@media screen and (max-width: 1200px) {
+    article {
+        width: 100vw;
+        flex-direction: column;
+        margin: 0;
+    }   
+}
+
+
+article p {
+    width: 100%;
+    padding: 20px;
+    font-size: 22px;
+    text-align: justify;
+}
+
+
+@media screen and (max-width: 1200px) {
+    p {
+        width: 100%;
+        margin: 0;
+    }   
+}
+
+
+.serie-image {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+   
+}
+
+
+@media screen and (max-width: 1200px) {
+    .serie-image {
+        flex-direction: column;
+        margin-bottom: 30px;
+    }   
+}
+
+
+.serie-image img {
+    width: 32%;
+    border: 1px solid black;
+
+}
+
+
+aside {
+    width: 30%;
+    margin: 20px;
+    background: rgb(14, 123, 181);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+@media screen and (max-width: 1200px) {
+    aside {
+        width: 100vw;
+        margin: 0;
+    }   
+}
+
+
+figure img {
+    margin-top: 20px;
+    border: 1px solid white;
+    width: 300px;
+}
+
+
+aside h3 {
+    color: rgb(224, 224, 224);
+    font-size: 28px;
+}
+
+
+aside h4 {
+    color: rgb(224, 224, 224);
+    font-size: 18px;
+    font-style: italic;
+}
+
+
+aside p {
+    color: rgb(224, 224, 224);
+    font-size: 22px;
+    text-align: justify;
+    padding: 20px;
+}
+
+
+
+footer {
+    display: flex;
+    flex-direction: row;
+    background: rgb(8, 69, 154);
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    width: 1600px;
+    margin: auto;
+}
+
+
+@media screen and (max-width: 1200px) {
+    footer {
+        width: 100vw;
+        text-align: center;   /* pourquoi suis-je obligé de mettre ça pour bien centrer ? */
+    }   
+}
+
+
+footer p {
+    color: rgb(224, 224, 224);
+    font-size: 22px;
+}
+
+
+
+

@@ -11,7 +11,7 @@ abstract class Connect {
     // constante qui définit le nom du serveur.
     const HOST = "localhost";
     // constante qui définit le nom de la base de données.
-    const DB = "cinema";
+    const DB = "cinema_michael";
     // constante qui définit l'identifiant.
     const USER = "root";
     // constante qui définit le mot de passe ou "" s'il n'y a pas de mot de passe.

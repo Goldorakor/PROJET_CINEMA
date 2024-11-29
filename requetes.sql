@@ -274,7 +274,7 @@ Explications :
 oooooooooooooooooooooooooooooooooooooooooooooooooooooo
 
 
-Bonjour, j'aimerais que tu me donnes une requête pour créer 3 acteurs qui auront joué chacun dans 4 films. Tu peux leur créer des nouveaux personnages qui tu ajouteras à des films existants.
+Bonjour, j'aimerais que tu me donnes une requête pour créer 3 acteurs qui auront joué chacun dans 4 films. Tu peux leur créer des nouveaux personnages que tu ajouteras à des films existants.
 
 -- 1. Créer trois nouveaux acteurs
 -- Acteur 1 : Alain Dupuis
@@ -300,11 +300,11 @@ VALUES (22, 'Le Magicien'), (23, 'Le Soldat'), (24, 'Le Docteur'), (25, 'Le Vole
 
 -- Personnage pour Lucien Bernard
 INSERT INTO Personnage (idPersonnage, nom)
-VALUES (26, 'Le Pirate'), (27, 'L\'Explorateur'), (28, 'Le Médecin'), (29, 'Le Comédien');
+VALUES (26, 'Le Pirate'), (27, "L'Explorateur"), (28, 'Le Médecin'), (29, 'Le Comédien');
 
 -- Personnage pour Éric Lefevre
 INSERT INTO Personnage (idPersonnage, nom)
-VALUES (30, 'Le Voyageur'), (31, 'Le Prince'), (32, 'Le Géant'), (33, 'L\'Espion');
+VALUES (30, 'Le Voyageur'), (31, 'Le Prince'), (32, 'Le Géant'), (33, "L'Espion");
 
 -- 3. Associer ces acteurs à des personnages dans des films existants
 -- Acteur Alain Dupuis (idActeur 20)
