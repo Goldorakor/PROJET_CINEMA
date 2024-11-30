@@ -87,7 +87,7 @@ class CinemaController {
     */
 
     // public function detailsFilm ($blabla) -> dans index, on appelera cette méthode, en lui donnant l'attribut $idFilmChoisi à la place de $blabla
-    // -> je dis une bêtise : dans l'index, à chaque cas, on appelle une méthode correspondante ... on étudie le cas général, sans se soucier de quelles attributs on appliquera à nos méthodes
+    // -> je dis une bêtise : dans l'index, à chaque cas, on appelle une méthode correspondante ... on étudie le cas général, sans se soucier de quels attributs on appliquera à nos méthodes
     public function detailsFilm ($idFilmChoisi) {
 
         $pdo = Connect::seConnecter();
