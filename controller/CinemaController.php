@@ -16,6 +16,7 @@ class CinemaController {
         require "view/home.php";
     }
 
+    
     /*
     * lister les films
     */
@@ -38,6 +39,7 @@ class CinemaController {
         require "view/listeFilms.php";
     }
 
+    
     /*
     * lister les acteurs
     */
@@ -60,6 +62,7 @@ class CinemaController {
         require "view/listeActeurs.php";
     }
 
+    
     /*
     * lister les réalisateurs
     */
@@ -82,6 +85,7 @@ class CinemaController {
         require "view/listeRealisateurs.php";
     }
 
+    
     /*
     * détailler un film
     */
@@ -91,28 +95,6 @@ class CinemaController {
     public function detailsFilm ($idFilmChoisi) {
 
         $pdo = Connect::seConnecter();
-
-        /*
-        attention, cette portion de code n'a pas sa place ici ! il faudra mettre un code similaire quelque part dans index.php
-
-        vérification de l'id du film
-        if (!isset($_GET['id'])) {
-            die("erreur : l'id du film est manquant");
-        }
-
-        // on récupère l'id du film choisi dans la liste de films
-        $idFilmChoisi = $_GET['id'];
-        */
-
-
-        // (YEAR(NOW()) - YEAR(personne.dateNaissance)) AS ageActeur -> je stocke ici au cas où
-        $sql4 = "
-            SELECT film.idRealisateur, film.idFilm, film.titre, film.synopsis, film.duree, film.note,  DATE_FORMAT(film.dateSortie, '%Y') AS anneeSortie, personne.prenom, UPPER(personne.nom) AS nom
-            FROM film
-            INNER JOIN realisateur ON film.idRealisateur = realisateur.idRealisateur
-            INNER JOIN personne ON realisateur.idPersonne = personne.idPersonne
-            WHERE film.idFilm = :id
-        ";
 
 
         //vérification de l'id du film
@@ -124,9 +106,19 @@ class CinemaController {
         // $idFilmChoisi = $_GET['id']; -> syntaxe classique que j'utilise
         $idFilmChoisi = (isset($_GET['id'])) ? $_GET['id'] : null;  // syntaxe du formateur
 
+
+        $sql4 = "
+            SELECT film.idRealisateur, film.idFilm, film.titre, film.synopsis, film.duree, film.note,  DATE_FORMAT(film.dateSortie, '%Y') AS anneeSortie, personne.prenom, UPPER(personne.nom) AS nom
+            FROM film
+            INNER JOIN realisateur ON film.idRealisateur = realisateur.idRealisateur
+            INNER JOIN personne ON realisateur.idPersonne = personne.idPersonne
+            WHERE film.idFilm = :id
+        ";
+
         $requete1 = $pdo->prepare($sql4);
         $requete1->execute(["id" => $idFilmChoisi]);
 
+        
         $sql5 = "
             SELECT acteur.idActeur, film.idFilm, UPPER(personne.nom) AS nom, personne.prenom, personne.sexe, personnage.nom AS role
             FROM casting
@@ -137,11 +129,11 @@ class CinemaController {
             WHERE film.idFilm = :id
         ";
 
-
         $requete2 = $pdo->prepare($sql5);
         $requete2->execute(["id" => $idFilmChoisi]);
 
-        // requête pour lister les genres d'un film -> vérification effectuée
+        
+        // requête pour lister les genres d'un film
         $sql6 = "
             SELECT genre.libelle
             FROM classer_par_genre
@@ -153,6 +145,7 @@ class CinemaController {
         $requete3 = $pdo->prepare($sql6);
         $requete3->execute(["id" => $idFilmChoisi]);
 
+        
         // on relie par un "require" la vue qui nous intéresse (située dans le dossier "view")
         require "view/detailsFilm.php";
     }
@@ -166,14 +159,6 @@ class CinemaController {
 
         $pdo = Connect::seConnecter();
 
-        $sql7 = "
-            SELECT prenom, UPPER(personne.nom) AS nom, sexe, (YEAR(NOW()) - YEAR(personne.dateNaissance)) AS ageActeur
-            FROM personne
-            INNER JOIN acteur ON personne.idPersonne = acteur.idPersonne
-            WHERE acteur.idActeur = :id
-        "; /* WHERE personne.idPersonne = :id ou WHERE acteur.idActeur = :id -> deux choix possibles */
-        /* FAUX -> il faut prendre WHERE acteur.idActeur = :id et rien d'autre */
-
 
         //vérification de l'id de l'acteur
         if (!isset($_GET['id'])) {
@@ -184,9 +169,19 @@ class CinemaController {
         // $idActeurChoisi = $_GET['id']; -> syntaxe classique que j'utilise
         $idActeurChoisi = (isset($_GET['id'])) ? $_GET['id'] : null;  // syntaxe du formateur
 
+
+        $sql7 = "
+            SELECT prenom, UPPER(personne.nom) AS nom, sexe, (YEAR(NOW()) - YEAR(personne.dateNaissance)) AS ageActeur
+            FROM personne
+            INNER JOIN acteur ON personne.idPersonne = acteur.idPersonne
+            WHERE acteur.idActeur = :id
+        "; /* WHERE personne.idPersonne = :id ou WHERE acteur.idActeur = :id -> deux choix possibles */
+        /* FAUX -> il faut prendre WHERE acteur.idActeur = :id et rien d'autre */
+
         $requete1 = $pdo->prepare($sql7);
         $requete1->execute(["id" => $idActeurChoisi]);
 
+        
         $sql8 = "
             SELECT film.idFilm, film.titre, personnage.nom
             FROM casting
@@ -200,10 +195,12 @@ class CinemaController {
         $requete2 = $pdo->prepare($sql8);
         $requete2->execute(["id" => $idActeurChoisi]);
 
+        
         // on relie par un "require" la vue qui nous intéresse (située dans le dossier "view")
         require "view/detailsActeur.php";
     }
 
+    
     /*
     * détailler un réalisateur
     */
@@ -211,13 +208,6 @@ class CinemaController {
     public function detailsRealisateur ($idRealisateurChoisi) {
 
         $pdo = Connect::seConnecter();
-
-        $sql9 = "
-            SELECT prenom, UPPER(personne.nom) AS nom, sexe, (YEAR(NOW()) - YEAR(personne.dateNaissance)) AS ageRealisateur
-            FROM personne
-            INNER JOIN realisateur ON personne.idPersonne = realisateur.idPersonne
-            WHERE realisateur.idRealisateur = :id
-        "; /* WHERE personne.idPersonne = :id ou WHERE realisateur.idRealisateur = :id -> deux choix possibles */
 
         
         //vérification de l'id du réalisateur
@@ -229,7 +219,14 @@ class CinemaController {
         // $idRealisateurChoisi = $_GET['id']; -> syntaxe classique que j'utilise
         $idRealisateurChoisi = (isset($_GET['id'])) ? $_GET['id'] : null;  // syntaxe du formateur
 
-        
+
+        $sql9 = "
+            SELECT prenom, UPPER(personne.nom) AS nom, sexe, (YEAR(NOW()) - YEAR(personne.dateNaissance)) AS ageRealisateur
+            FROM personne
+            INNER JOIN realisateur ON personne.idPersonne = realisateur.idPersonne
+            WHERE realisateur.idRealisateur = :id
+        "; /* WHERE personne.idPersonne = :id ou WHERE realisateur.idRealisateur = :id -> deux choix possibles */
+
         $requete1 = $pdo->prepare($sql9);
         $requete1->execute(["id" => $idRealisateurChoisi]);
 
