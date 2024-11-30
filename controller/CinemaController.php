@@ -94,13 +94,12 @@ class CinemaController {
     // -> je dis une bêtise : dans l'index, à chaque cas, on appelle une méthode correspondante ... on étudie le cas général, sans se soucier de quels attributs on appliquera à nos méthodes
     public function detailsFilm ($idFilmChoisi) {
 
-        $pdo = Connect::seConnecter();
-
-
         //vérification de l'id du film
         if (!isset($_GET['id'])) {
             die("erreur : l'id du film est manquant");
         }
+
+        $pdo = Connect::seConnecter();
     
         // on récupère l'id du film choisi dans la liste de films
         // $idFilmChoisi = $_GET['id']; -> syntaxe classique que j'utilise
@@ -157,13 +156,12 @@ class CinemaController {
 
     public function detailsActeur ($idActeurChoisi) {
 
-        $pdo = Connect::seConnecter();
-
-
         //vérification de l'id de l'acteur
         if (!isset($_GET['id'])) {
             die("erreur : l'id de l'acteur est manquant");
         }
+
+        $pdo = Connect::seConnecter();
     
         // on récupère l'id de l'acteur choisi dans la liste d'acteurs
         // $idActeurChoisi = $_GET['id']; -> syntaxe classique que j'utilise
@@ -207,13 +205,12 @@ class CinemaController {
 
     public function detailsRealisateur ($idRealisateurChoisi) {
 
-        $pdo = Connect::seConnecter();
-
-        
         //vérification de l'id du réalisateur
         if (!isset($_GET['id'])) {
             die("erreur : l'id du réalisateur est manquant");
         }
+
+        $pdo = Connect::seConnecter();
     
         // on récupère l'id du réalisateur choisi dans la liste de réalisateurs
         // $idRealisateurChoisi = $_GET['id']; -> syntaxe classique que j'utilise
@@ -252,7 +249,6 @@ class CinemaController {
     */
 
     public function ajoutGenreBase () {
-
         
         if(isset($_POST['submit'])) {
             // var_dump("ok");die;
@@ -261,13 +257,14 @@ class CinemaController {
             if($libelleGenreRecup) {
 
                 $pdo = Connect::seConnecter();
+                
                 $sql11 = "
                     INSERT INTO genre (libelle)
                     VALUES (:libelle)
                 ";
                     
-                $requete2 = $pdo->prepare($sql11);
-                $requete2->execute(["libelle" => $libelleGenreRecup]);
+                $requete = $pdo->prepare($sql11);
+                $requete->execute(["libelle" => $libelleGenreRecup]);
         
                 // on crée une variable success, qui confirmera le bon enregistrement du produit
                 $_SESSION['success'] = "Le libellé a été enregistré avec succès";
@@ -280,6 +277,9 @@ class CinemaController {
                 header("Location: index.php?action=home");
             }
     }
+
+    
+    
 }
 
 /* 
