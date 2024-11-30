@@ -21,7 +21,7 @@ if(isset($_GET["action"])) {
     // en fonction de l'action détectée dans l'URL via la propriété "action", on interagit avec la bonne méthode du controller.
     switch ($_GET["action"]) {
 
-        // si je détecte cette action, j'appelle directement view/home.php -> NON !!!
+        // si je détecte cette action, j'appelle directement view/home.php -> case "home" : require"view/home.php"; break; -> EN FAIT NON !!!
         // pour uniformiser notre code, il est plus propre d'appeler la méthode home() qui est définie comme suit :
         // public function home() {require "view/home.php";}
         case "home" : $ctrlCinema->home(); break;
