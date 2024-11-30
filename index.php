@@ -28,8 +28,10 @@ if(isset($_GET["action"])) {
 
         // si je détecte cette action, j'appelle la méthode ListFilms() du controller $ctrlCinema
         case "listFilms" : $ctrlCinema->ListFilms(); break;
+        
         // si je détecte cette action, j'appelle la méthode ListActeurs() du controller $ctrlCinema
         case "listActeurs" : $ctrlCinema->ListActeurs(); break;
+        
         // si je détecte cette action, j'appelle la méthode ListRealisateurs() du controller $ctrlCinema
         case "listRealisateurs" : $ctrlCinema->ListRealisateurs(); break;
 
