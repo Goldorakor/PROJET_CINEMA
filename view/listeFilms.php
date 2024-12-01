@@ -54,3 +54,5 @@ $contenu = ob_get_clean();
 // le require de fin permet d'injecter le contenu dans le template "squelette" -> template.php
 // en effet, dans notre "template.php" on aura des variables qui vont accueillir les éléments provenant des vues
 require "view/template.php";
+
+?>

@@ -2,7 +2,7 @@
 <!-- on commence et on termine la vue par "ob_start()" et "ob_get_clean()" -->
 <?php ob_start(); ?>
 
-<p class="uk-label uk-label-warning">Ce réalisateur a réalisé <?= $requete2->rowCount() ?> film(s).</p>
+<p class="uk-label uk-label-warning">Ce réalisateur a réalisé <?= $requete2->rowCount() ?> film(s) de notre liste de films.</p>
 
 
 
@@ -82,4 +82,6 @@ $contenu = ob_get_clean();
 // le require de fin permet d'injecter le contenu dans le template "squelette" -> template.php
 // en effet, dans notre "template.php" on aura des variables qui vont accueillir les éléments provenant des vues
 require "view/template.php";
+
+?>
 

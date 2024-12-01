@@ -28,6 +28,9 @@
                     <li>
                         <a class='moyen' href="index.php?action=listRealisateurs">Réalisateurs</a>
                     </li>
+                    <li>
+                        <a class='moyen' href="index.php?action=listGenres">Genres</a>
+                    </li>
                 </ul>
 
                 <!-- menu hamburger récupéré sur le travail Projet_Simpson, que j'adapte à mon projet actuel -->
@@ -44,6 +47,9 @@
                         </li>
                         <li class="smart-menu">
                             <a href="index.php?action=listRealisateurs">Realisateurs</a>
+                        </li>
+                        <li class="smart-menu">
+                            <a href="index.php?action=listGenres">Genres</a>
                         </li>
                         <li class="smart-menu">
                             <a href="#">Contact</a>

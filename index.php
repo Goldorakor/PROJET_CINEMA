@@ -35,17 +35,32 @@ if(isset($_GET["action"])) {
         // si je détecte cette action, j'appelle la méthode ListRealisateurs() du controller $ctrlCinema
         case "listRealisateurs" : $ctrlCinema->ListRealisateurs(); break;
 
+        // si je détecte cette action, j'appelle la méthode ListGenres() du controller $ctrlCinema : ajout personnel :-)
+        case "listGenres" : $ctrlCinema->ListGenres(); break;
+
         // les vérifications sur $idFilmChoisi ont été transférées au CinemaController.php
         case "detailsFilm" : $ctrlCinema->detailsFilm($id); break;
 
         // les vérifications sur $idActeurChoisi ont été transférées au CinemaController.php
         case "detailsActeur" : $ctrlCinema->detailsActeur($id); break;
 
-        // les vérifications sur $idActeurChoisi ont été transférées au CinemaController.php
+        // les vérifications sur $idRealisateurChoisi ont été transférées au CinemaController.php
         case "detailsRealisateur" : $ctrlCinema->detailsRealisateur($id); break;
+
+        // Cette méthode doit renseigner sur le nombre de films qui appartiennent au genre sélectionné et aux détails des films corespondants : ajout personnel :-)
+        case "detailsGenre" : $ctrlCinema->detailsGenre($id); break;
 
         // les vérifications sur la variable $_POST['libelle'] dans la superglobale $_POST ont été transférées au CinemaController.php
         case "ajoutGenreBase" : $ctrlCinema->ajoutGenreBase(); break;
+
+        // Ce cas de figure est tout à fait similaire à case "ajoutGenreBase"
+        case "ajoutPersonnageBase" : $ctrlCinema->ajoutPersonnageBase(); break;
+
+        // Ce cas de figure est différent des cas "ajoutGenreBase" et "ajoutPersonnageBase" : il faut réussir à traiter le fait qu'une personne est acteur, réalisateur ou les deux.
+        // Cette méthode est donc utilisée pour ajouter une personne qui est acteur ou réalisateur ou les deux ou ni l'un ni l'autre.
+        case "ajoutPersonneBase" : $ctrlCinema->ajoutPersonneBase(); break;
+
+
 
 
 
