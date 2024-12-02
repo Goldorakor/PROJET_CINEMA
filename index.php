@@ -75,4 +75,17 @@ if(isset($_GET["action"])) {
 // ici, on devra renvoyer sur une autre location, si on n'a pas récupéré d'actions
 
 
+/* 
+
+remarques intéressantes : 
+
+!empty($variable) -> Vérifie si la variable n'est pas vide, c'est-à-dire qu'elle contient une valeur "non vide" comme une chaîne, un nombre non nul, ou un tableau non vide.
+
+($variable) -> Vérifie si la variable est "vraie" dans un contexte booléen. Si elle contient une valeur équivalente à false (comme false, null, 0, ou une chaîne vide), la condition sera fausse.
+
+isset($variable) -> vérifie si une variable a été définie et si elle n'est pas 'null'. Elle renvoie 'true' si la variable est définie et non 'null'. Elle renvoie 'false' si la variable n'est pas définie ou si elle est 'null'.
+
+*/
+
+
 ?>
